@@ -1,6 +1,8 @@
 # ucas-slide
 
 中国科学院大学（UCAS）演示文稿模板，基于 [Touying](https://github.com/touying-typ/touying) 构建。
+当然，这是非官方的。
+作者：汤磊
 
 Presentation slides for the University of Chinese Academy of Sciences (UCAS), powered by Touying.
 
@@ -34,6 +36,13 @@ typst compile main.typ
 == 小节标题       // 内容页
 
 #end-slide()     // 结束页（谢谢聆听）
+```
+
+## 嫌麻烦？
+```
+1. 直接down下来，用vscode打开
+2. 下个"Tinymist"插件
+3. 基于模板修改后，右击鼠标即可导出
 ```
 
 ## 可用的页面与组件
