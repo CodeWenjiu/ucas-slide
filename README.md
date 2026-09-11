@@ -1,5 +1,5 @@
 # ucas-slide
-![slides](./thumbnail.png)
+![slides](./zhanshi.png)
 中国科学院大学（UCAS）演示文稿模板，基于 [Touying](https://github.com/touying-typ/touying) 构建。
 当然，这是非官方的。
 作者：汤磊
