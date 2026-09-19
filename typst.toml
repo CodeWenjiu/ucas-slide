@@ -1,0 +1,42 @@
+[package]
+name = "ucas-slide"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Tang Lei <@CodeWenjiu>"]
+license = "MIT"
+description = "Slides and homework sheets for the University of Chinese Academy of Sciences."
+repository = "https://github.com/CodeWenjiu/ucas-slide"
+keywords = [
+    "University of Chinese Academy of Sciences",
+    "UCAS",
+    "presentation",
+    "slides",
+    "beamer",
+    "touying",
+    "homework",
+]
+categories = ["presentation", "report"]
+compiler = "0.13.0"
+# 只随包分发运行所必需的文件；仓库里的示例与截图仍保留在仓库中，
+# 但不进 Typst 下载的归档，避免体积膨胀。
+# 注意：模板目录（template/）、README 与 LICENSE 必须保留，不能排除。
+exclude = [
+    "/main.typ",
+    "/main-hw.typ",
+    "/figures",
+    "/zhanshi.png",
+    "/flake.nix",
+    "/flake.lock",
+    "/.envrc",
+    "/.gitignore",
+    "/.direnv",
+    "/.typst-packages",
+    # 未被主题引用的素材；其中“仅限于网站使用”一项按校方规定不得用于其他用途。
+    "/ucas_fig/2019.6.21中国科学院大学旗子转曲-01.jpg",
+    "/ucas_fig/国科大标准Logo（仅限于网站使用，不做其他用途）.png",
+]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"
