@@ -1,0 +1,7 @@
+# nix-direnv / nix build artifacts
+.direnv/
+result
+result-*
+
+# 本地 Typst 包目录（flake devShell 自动生成，内容是指回仓库的符号链接）
+.typst-packages/
