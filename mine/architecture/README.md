@@ -11,9 +11,9 @@
 在仓库根目录执行：
 
 ```sh
-make                                           # 编译（出 PDF）
-make preview                                   # 浏览器实时预览，可翻页
-make png PAGES=1                               # 导出 PNG 到 .preview/
+just                                           # 编译（出 PDF）
+just preview                                   # 浏览器实时预览，可翻页
+just png 1                                     # 导出第 1 页 PNG 到 .preview/
 
 typst compile --root . mine/architecture/hw01.typ   # 等价的手写命令
 typst watch   --root . mine/architecture/hw01.typ   # 只要 PDF 自动重编
@@ -27,4 +27,5 @@ typst watch   --root . mine/architecture/hw01.typ   # 只要 PDF 自动重编
 - 课程作业**不会**随包分发（`typst.toml` 的 `exclude` 已排除 `mine/`），
   它只是本仓库内的私人用例；
 - 作业姓名、学号写在文档顶部 `ucas-hw-theme` 的参数里，改一次即可；
-- 写新作业时复制 `hw01.typ` 改名，再把 `Makefile` 的 `FILES` 补一行。
+- 写新作业时复制 `hw01.typ` 改名，再把 `justfile` 的 `files` 补一项；
+  只想编译单个文件时不用改它，`just f <文件名>` 即可。

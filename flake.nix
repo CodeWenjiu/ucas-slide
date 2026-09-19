@@ -20,12 +20,13 @@
     {
       # 仅供开发本仓库使用（nix develop）。
       #
-      # 两个工具各司其职：
+      # 三个工具各司其职：
       #   typst    编译（PDF / PNG）
       #   tinymist Zed 的 Typst 语言服务器，同时带预览功能；
       #            它自带编译器，可独立于 typst 使用
+      #   just     命令入口（justfile）
       #
-      # 预览用法见仓库根的 Makefile（make preview / make png）。
+      # 用法见仓库根的 justfile（just preview / just png）。
       #
       # 这里不提供任何“安装到全局包目录”的命令：那种做法会改动用户环境，
       # 卸载不干净还会影响其他项目。想在自己的文档里使用本模板，请把仓库作为
@@ -40,6 +41,7 @@
           packages = with pkgs; [
             typst
             tinymist
+            just
           ];
 
           shellHook = ''
@@ -49,7 +51,7 @@
             # 才能引用仓库根的 lib.typ（Typst 默认把“项目根”当作待编译文件
             # 所在目录），但把它做成环境变量会反过来让仓库外的文件编不了
             # （source file must be contained in project root）。故改用
-            # 仓库根的 Makefile 传入 --root，靶围限定在单次调用。
+            # justfile 传入 --root，靶围限定在单次调用。
             #
             # template/ 里的导入写死了 `@preview/ucas-slide:<版本>`（因为这是
             # `typst init` 复制给终端的形态，必须如此）。为了让它在尚未发布到
