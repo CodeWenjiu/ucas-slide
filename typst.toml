@@ -25,6 +25,7 @@ exclude = [
     "/main-hw.typ",
     "/figures",
     "/zhanshi.png",
+    "/mine",
     "/flake.nix",
     "/flake.lock",
     "/.envrc",

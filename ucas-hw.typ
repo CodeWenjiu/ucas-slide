@@ -66,6 +66,11 @@
 
 // ============================ 填写栏 ============================
 // 形如“学号：__________”的下划线填写栏；value 为 none 时留白待填。
+//
+// 值超出一栏可用宽时（例如课程名“计算机体系结构”）自动等比缩字号，
+// 保证单行不折行——否则文字会溢出这个固定高度的栏位，被下划线截断。
+// 用 layout() 取真实可用宽，而非事先算列宽：列宽随页面边距、
+// gutter 等参数变化，写死会在改版式时失准。
 #let hw-field(
   label,
   value,
@@ -80,7 +85,19 @@
     height: height,
     stroke: (bottom: 0.6pt + ucas-line),
     inset: (left: 0.35em, right: 0.35em, bottom: 0.1em),
-    align(bottom + left, if value == none { [] } else { text(value) }),
+    align(bottom + left, if value == none {
+      []
+    } else {
+      context layout(area => {
+        let natural = measure(text(value)).width
+        let size = if natural > 0pt and area.width > 0pt and natural > area.width {
+          (area.width / natural) * 1em
+        } else {
+          1em
+        }
+        text(size: size, value)
+      })
+    }),
   ),
 )
 

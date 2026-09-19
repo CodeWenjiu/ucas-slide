@@ -5,3 +5,6 @@ result-*
 
 # 本地 Typst 包目录（flake devShell 自动生成，内容是指回仓库的符号链接）
 .typst-packages/
+
+# 编译产物（make 会把 PDF 输出到 .typ 旁边）
+*.pdf
