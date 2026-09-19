@@ -6,14 +6,17 @@
 #import "../../lib.typ": hw
 ```
 
-## 编译
+## 编译与预览
 
 在仓库根目录执行：
 
 ```sh
-make                                           # 编译 Makefile 中登记的作业
-typst compile --root . mine/architecture/hw01.typ
-typst watch   --root . mine/architecture/hw01.typ   # 改一处自动重编
+make                                           # 编译（出 PDF）
+make preview                                   # 浏览器实时预览，可翻页
+make png PAGES=1                               # 导出 PNG 到 .preview/
+
+typst compile --root . mine/architecture/hw01.typ   # 等价的手写命令
+typst watch   --root . mine/architecture/hw01.typ   # 只要 PDF 自动重编
 ```
 
 `--root .` 不能省：Typst 默认把“项目根”当作待编译文件所在目录，

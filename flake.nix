@@ -20,6 +20,13 @@
     {
       # 仅供开发本仓库使用（nix develop）。
       #
+      # 两个工具各司其职：
+      #   typst    编译（PDF / PNG）
+      #   tinymist Zed 的 Typst 语言服务器，同时带预览功能；
+      #            它自带编译器，可独立于 typst 使用
+      #
+      # 预览用法见仓库根的 Makefile（make preview / make png）。
+      #
       # 这里不提供任何“安装到全局包目录”的命令：那种做法会改动用户环境，
       # 卸载不干净还会影响其他项目。想在自己的文档里使用本模板，请把仓库作为
       # git 子模块（或直接拷贝）放进你的项目，再用相对路径导入：
@@ -32,6 +39,7 @@
         default = pkgs.mkShell {
           packages = with pkgs; [
             typst
+            tinymist
           ];
 
           shellHook = ''
