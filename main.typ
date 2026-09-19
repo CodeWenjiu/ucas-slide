@@ -1,5 +1,20 @@
-#import "./ucas-slide.typ": *
+// ============================================================================
+// 示例：在仓库内直接编译的演示文稿
+//
+// 这里刻意使用与终端用户完全一致的导入方式，用来验证包本身是否正常：
+//
+//     #import "@preview/ucas-slide:0.1.0": *
+//
+// 尚未发布到 Universe 时，flake devShell 会把本仓库挂载为
+// `@preview/ucas-slide:0.1.0` 的本地副本（见 flake.nix 的 shellHook），
+// 因此进入 `nix develop` / direnv 环境后即可直接编译：
+//
+//     typst compile main.typ
+//
+// 发布之后，同一份文件无需改动也能正常编译。
+// ============================================================================
 
+#import "@preview/ucas-slide:0.1.0": *
 
 #set text(font: ("Arial", "Source Han Sans"))
 

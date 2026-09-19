@@ -12,6 +12,11 @@
 #let ucas-blue-grad = gradient.linear(ucas-blue, ucas-blue.lighten(80%))
 
 
+// 素材用相对路径引用：Typst 中相对路径按“书写它的文件”解析，因此无论本文件
+// 是被包（@preview/...）导入，还是被 git 子模块/直接拷贝的方式导入，
+// 都能定位到同一份素材。
+// 注意：不要改成前导 `/` 的写法——那种路径相对“项目根”解析，
+// 在以子模块方式引入时会跑到调用方的项目根去而找不到文件。
 #let ucas-logo-blue = "./ucas_fig/国科大标准Logo横式一（蓝色）.png"
 #let ucas-logo-white = "./ucas_fig/国科大标准Logo横式一（白色）.png"
 #let ucas-logo-white-2 = "./ucas_fig/国科大标准Logo横式二（白色）.png"

@@ -15,6 +15,7 @@
 )
 
 // ---------------------------- 素材 ----------------------------
+// 同 ucas-slide.typ：用相对路径，保证以包或子模块两种方式引入时都能定位素材。
 #let ucas-logo-blue = "./ucas_fig/国科大标准Logo横式一（蓝色）.png" // 页眉：校名横式标识
 #let ucas-badge = "./ucas_fig/中国科学院院徽.png" // 纸张正中水印
 #let ucas-calligraphy-red = "./ucas_fig/国科大书法字（红色）.png" // 页脚：书法体“国科大”

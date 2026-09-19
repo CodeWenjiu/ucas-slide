@@ -1,12 +1,21 @@
-#import "./ucas-hw.typ": *
+// ============================================================================
+// 示例：在仓库内直接编译的作业纸
+//
+// 与 main.typ 一样，用终端用户的方式导入，以便验证包是否正常。
+// 作业纸符号位于 `hw` 命名空间下（两个主题有同名常量，必须隔开）。
+//
+//     typst compile main-hw.typ
+// ============================================================================
 
-#show: ucas-hw-theme.with(
+#import "@preview/ucas-slide:0.1.0": hw
+
+#show: hw.ucas-hw-theme.with(
   course: [机器学习基础],
   name: [张三],
   student-id: [2024E8012345678],
 )
 
-#hw-title(
+#hw.hw-title(
   [第一次作业：线性回归与梯度下降],
   subtitle: [第 1 章　线性模型],
   note: [提交时间：2026 年 9 月 20 日 23:59 前],
@@ -14,7 +23,7 @@
 
 = 习题一　最小二乘法的闭式解
 
-#hw-problem(
+#hw.hw-problem(
   number: [第 1 题],
   title: [正规方程],
 )[
@@ -35,14 +44,9 @@ $ nabla L(bold(w)) = bold(X)^top (bold(X) bold(w) - bold(y)) = bold(0), $
 
 $ bold(w)^* = (bold(X)^top bold(X))^(-1) bold(X)^top bold(y). $
 
-// #hw-note(title: [注意])[
-//   当 $bold(X)^top bold(X)$ 不可逆时（例如 $d > n$），可采用 $L_2$ 正则化，
-//   即岭回归：$bold(w)^* = (bold(X)^top bold(X) + lambda bold(I))^(-1) bold(X)^top bold(y)$。
-// ]
-
 = 习题二　梯度下降的收敛性
 
-#hw-problem(
+#hw.hw-problem(
   number: [第 2 题],
   title: [学习率的选取],
 )[
@@ -61,7 +65,7 @@ $O(1\/k)$。详细推导见附录。
 
 = 习题三　编程实现
 
-#hw-problem(
+#hw.hw-problem(
   number: [第 3 题],
   title: [实现批梯度下降],
 )[
@@ -83,6 +87,6 @@ def bgd(X, y, lr=0.01, epochs=1000):
     return w
 ```
 
-#hw-note(title: [提交要求], color: ucas-flag-blue)[
+#hw.hw-note(title: [提交要求], color: hw.ucas-flag-blue)[
   代码文件命名为 `学号_姓名_hw1.ipynb`，与本次作业的 PDF 一起打包提交。
 ]
