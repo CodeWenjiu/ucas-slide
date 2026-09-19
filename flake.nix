@@ -37,6 +37,12 @@
           shellHook = ''
             # 以下改动只作用于本 devShell，不写入任何全局配置。
             #
+            # 注意：这里没有设 TYPST_ROOT。mine/<课题>/*.typ 需要 `--root .`
+            # 才能引用仓库根的 lib.typ（Typst 默认把“项目根”当作待编译文件
+            # 所在目录），但把它做成环境变量会反过来让仓库外的文件编不了
+            # （source file must be contained in project root）。故改用
+            # 仓库根的 Makefile 传入 --root，靶围限定在单次调用。
+            #
             # template/ 里的导入写死了 `@preview/ucas-slide:<版本>`（因为这是
             # `typst init` 复制给终端的形态，必须如此）。为了让它在尚未发布到
             # Universe 时也能在本地编译验证，这里把本仓库挂成该包的本地副本。
