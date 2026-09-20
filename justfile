@@ -36,27 +36,39 @@ examples:
 
 # ---------------------------------------------------------------- 预览
 
-# zathura 由 devShell 提供（仅 Linux）；不可用时依次回退到 mupdf / 系统默认
-# 程序，但那两者不一定自动刷新。
+# zathura 由 devShell 提供（仅 Linux），它在 PDF 变化时会自动刷新，于是
+# typst watch 一重编就立即可见。没有 zathura 时回退到 mupdf；两者都没有
+# 就只跑 watch 并提示。
 #
 # just 只把注释块的最后一行当作 --list 的说明，所以摘要必须写在最后。
 #
-# 实时预览：zathura 打开 PDF 并随 typst watch 自动刷新（Ctrl-C 退出）
+# 实时预览：zathura 打开 PDF，随 typst watch 自动刷新（关窗即结束）
 preview src=default_file out='.preview/preview.pdf':
     #!/usr/bin/env bash
     set -euo pipefail
     mkdir -p .preview
     typst compile --root . "{{src}}" "{{out}}"
+
+    viewer=""
     if command -v zathura >/dev/null 2>&1; then
-      zathura "{{out}}" &
+      viewer=zathura
     elif command -v mupdf >/dev/null 2>&1; then
-      mupdf "{{out}}" &
-    elif command -v xdg-open >/dev/null 2>&1; then
-      xdg-open "{{out}}" &
-    else
-      echo "未找到 PDF 阅读器；PDF 仍会持续更新：{{out}}" >&2
+      viewer=mupdf
     fi
-    typst watch --root . "{{src}}" "{{out}}"
+
+    if [ -z "$viewer" ]; then
+      echo "未找到 PDF 阅读器；PDF 会持续更新：{{out}}" >&2
+      exec typst watch --root . "{{src}}" "{{out}}"
+    fi
+
+    # watch 放后台、阅读器放前台：关掉窗口或按 Ctrl-C 都会走到 trap，
+    # 顺带把 watch 收掉。之前 watch 独占前台，关窗后它还一直跑，
+    # 终端就卡在那儿。
+    typst watch --root . "{{src}}" "{{out}}" &
+    watch_pid=$!
+    trap 'kill "$watch_pid" 2>/dev/null || true' EXIT INT TERM
+
+    "$viewer" "{{out}}"
 
 # 导出 PNG 到 .preview/：just png 1 mine/architecture/hw01.typ
 png pages='' src=default_file:

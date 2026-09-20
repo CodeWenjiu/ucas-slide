@@ -16,7 +16,13 @@
 
 #import "@preview/ucas-slide:0.1.0": *
 
-#set text(font: ("Arial", "Source Han Sans"))
+// 默认不指定字体：交给 Typst 的内置字体 + 系统回退，免得本机缺少某个字体
+// 就发一堆警告。缺点是不指定中文家族时会回退成无衬线的繁体字形，中文正文
+// 需要的话自行打开下面这行（Windows 用 SimSun、macOS 用 Songti SC）：
+// #set text(font: ("Source Han Sans SC",))
+//
+// 注：不要用 "Noto Sans/Serif CJK SC"——那是可变字体，Typst 会取错实例
+// （实测拿到 Thin/ExtraLight），字会变得很细。
 
 #show: ucas-theme.with(
   config-info(

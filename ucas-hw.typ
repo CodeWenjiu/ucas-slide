@@ -7,11 +7,20 @@
 #let ucas-line = ucas-grey.transparentize(55%)
 
 // ---------------------------- 字体 ----------------------------
-// 依次回退；列表里不存在的字体会产生 Typst 警告，可按需增删
+// 只列“确实存在”的字体：Typst 会为列表中每一个缺失的家族各发一条警告。
+// 「New Computer Modern」内嵌于 Typst，任何环境都有。
+//
+// 中文必须显式指定家族，否则会回退成无衬线的繁体字形（实测回退到
+// Source Han Sans TC），和西文的衬线正文不搭。
+//
+// 为什么用 Source Han 而不是 Noto：后者的 CJK 家族是可变字体
+// （NotoSerifCJK-VF.otf.ttc），Typst 会取错实例，实测拿到 ExtraLight
+// 而不是 Regular，正文会变得很细。思源系是静态 TTC，字重正常。
+//
+// 换系统时替换第二项：Windows → "SimSun"，macOS → "Songti SC"。
 #let ucas-hw-fonts = (
-  "Times New Roman",
   "New Computer Modern",
-  "Songti SC",
+  "Source Han Serif SC",
 )
 
 // ---------------------------- 素材 ----------------------------
