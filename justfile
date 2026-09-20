@@ -36,9 +36,12 @@ examples:
 
 # ---------------------------------------------------------------- 预览
 
-# 实时预览：typst watch 持续重编，zathura 检测到变化自动刷新。Ctrl-C 退出。
-# zathura 由 devShell 提供（仅 Linux）；若不可用会依次回退到 mupdf / 系统默认
+# zathura 由 devShell 提供（仅 Linux）；不可用时依次回退到 mupdf / 系统默认
 # 程序，但那两者不一定自动刷新。
+#
+# just 只把注释块的最后一行当作 --list 的说明，所以摘要必须写在最后。
+#
+# 实时预览：zathura 打开 PDF 并随 typst watch 自动刷新（Ctrl-C 退出）
 preview src=default_file out='.preview/preview.pdf':
     #!/usr/bin/env bash
     set -euo pipefail
