@@ -23,10 +23,10 @@ mine/
 ```
 
 Typst 默认把“项目根”当作**待编译文件所在目录**，所以直接编译会被
-沙箱拦下（`would escape the project root`）。仓库根的 `Makefile` 会为
+沙箱拦下（`would escape the project root`）。仓库根的 `justfile` 会为
 每次调用传入 `--root .`：
 
-### 边写边看（浏览器实时预览）
+### 边写边看
 
 ```sh
 cd ../..                    # 回到仓库根
@@ -34,16 +34,17 @@ just preview                # 默认预览 hw01.typ
 just preview mine/architecture/hw02.typ
 ```
 
-tinymist 会自动打开浏览器，改文件即时重编。因为是幻灯片模式
-（`--preview-mode slide`），可以像 PPT 一样翻页。端口 23625/23626，
-Ctrl-C 退出。
+`just preview` 先编译一次，用 zathura 打开 PDF，再启动 `typst watch`。
+zathura 会在 PDF 变化时自动刷新，所以改文件就能立刻看到结果。Ctrl-C 退出。
 
 just 会自动切到 `justfile` 所在目录，所以**在任意子目录里都能用**，
 `--root .` 始终指向仓库根。
 
-Zed 里装好 Typst 扩展后也能预览（命令面板搜 `typst preview`），
-但注意它默认把项目根当成当前文件所在目录，`mine/` 下的文件会报
-同样的错——这时用上面的 `just preview` 更省事。
+> 为什么不用编辑器内预览？Zed 无法在编辑器内渲染 Typst——它的扩展只能提供
+> 语言、主题、调试器等能力，没有 webview；typst 扩展的 “Open Preview”
+> 其实就是交给浏览器打开一个本地页面。而 tinymist 自带的浏览器预览
+> 在当前版本的 CLI 下渲染不出内容（前端收不到页面数据，只有空白）。
+> 因此改走外部 PDF 阅读器这条路。
 
 ### 导出 PNG（截图、贴给别人或 AI 看）
 

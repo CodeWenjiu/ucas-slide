@@ -20,13 +20,20 @@
     {
       # 仅供开发本仓库使用（nix develop）。
       #
-      # 三个工具各司其职：
-      #   typst    编译（PDF / PNG）
-      #   tinymist Zed 的 Typst 语言服务器，同时带预览功能；
-      #            它自带编译器，可独立于 typst 使用
-      #   just     命令入口（justfile）
+      # 各工具的分工：
+      #   typst     编译（PDF / PNG）
+      #   tinymist  Zed 的 Typst 语言服务器（诊断/补全/格式化）
+      #   just      命令入口（justfile）
+      #   zathura   预览用的 PDF 阅读器（仅 Linux）；它会在 PDF 变化时自动
+      #             刷新，配合 `typst watch` 就是实时预览
       #
-      # 用法见仓库根的 justfile（just preview / just png）。
+      # 关于预览：Zed 不能在编辑器内渲染 Typst（扩展能力只有语言/主题/
+      # 调试器等，没有 webview），而 tinymist 自带的浏览器预览（它自家
+      # 扩展的 “Open Preview” 也是交给浏览器）在其 CLI 下渲染不出内容。
+      # 所以走 PDF 阅读器这条路：
+      #
+      #     just preview   typst watch + zathura 自动刷新
+      #     just png       导出 PNG，供查看或附给 AI
       #
       # 这里不提供任何“安装到全局包目录”的命令：那种做法会改动用户环境，
       # 卸载不干净还会影响其他项目。想在自己的文档里使用本模板，请把仓库作为
@@ -38,11 +45,16 @@
       # 不需要环境变量，也不需要 Nix。
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
-          packages = with pkgs; [
-            typst
-            tinymist
-            just
-          ];
+          packages =
+            with pkgs;
+            [
+              typst
+              tinymist
+              just
+            ]
+            # zathura 不在 x86_64-darwin 的 platforms 里，用 optionals 保护，
+            # 以免评估 darwin 时直接报错（flake 声明了四个系统）。
+            ++ lib.optionals stdenv.hostPlatform.isLinux [ zathura ];
 
           shellHook = ''
             # 以下改动只作用于本 devShell，不写入任何全局配置。

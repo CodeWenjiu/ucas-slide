@@ -36,9 +36,24 @@ examples:
 
 # ---------------------------------------------------------------- 预览
 
-# 浏览器实时预览，可像 PPT 一样翻页；Ctrl-C 退出
-preview src=default_file:
-    tinymist preview --preview-mode slide --root . {{src}}
+# 实时预览：typst watch 持续重编，zathura 检测到变化自动刷新。Ctrl-C 退出。
+# zathura 由 devShell 提供（仅 Linux）；若不可用会依次回退到 mupdf / 系统默认
+# 程序，但那两者不一定自动刷新。
+preview src=default_file out='.preview/preview.pdf':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p .preview
+    typst compile --root . "{{src}}" "{{out}}"
+    if command -v zathura >/dev/null 2>&1; then
+      zathura "{{out}}" &
+    elif command -v mupdf >/dev/null 2>&1; then
+      mupdf "{{out}}" &
+    elif command -v xdg-open >/dev/null 2>&1; then
+      xdg-open "{{out}}" &
+    else
+      echo "未找到 PDF 阅读器；PDF 仍会持续更新：{{out}}" >&2
+    fi
+    typst watch --root . "{{src}}" "{{out}}"
 
 # 导出 PNG 到 .preview/：just png 1 mine/architecture/hw01.typ
 png pages='' src=default_file:
@@ -52,7 +67,7 @@ png pages='' src=default_file:
 
 # ---------------------------------------------------------------- 其它
 
-# 删除编译产物与 .preview/
+# 删除编译产物、.preview/ 与预览用的 PDF
 clean:
     #!/usr/bin/env bash
     set -euo pipefail

@@ -12,7 +12,7 @@
 
 ```sh
 just                                           # 编译（出 PDF）
-just preview                                   # 浏览器实时预览，可翻页
+just preview                                   # 实时预览：zathura 自动刷新
 just png 1                                     # 导出第 1 页 PNG 到 .preview/
 
 typst compile --root . mine/architecture/hw01.typ   # 等价的手写命令
